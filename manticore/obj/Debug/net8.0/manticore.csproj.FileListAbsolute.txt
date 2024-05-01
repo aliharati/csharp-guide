@@ -1,0 +1,15 @@
+C:\Users\Ali\source\repos\csharp-guide\manticore\bin\Debug\net8.0\manticore.exe
+C:\Users\Ali\source\repos\csharp-guide\manticore\bin\Debug\net8.0\manticore.deps.json
+C:\Users\Ali\source\repos\csharp-guide\manticore\bin\Debug\net8.0\manticore.runtimeconfig.json
+C:\Users\Ali\source\repos\csharp-guide\manticore\bin\Debug\net8.0\manticore.dll
+C:\Users\Ali\source\repos\csharp-guide\manticore\bin\Debug\net8.0\manticore.pdb
+C:\Users\Ali\source\repos\csharp-guide\manticore\obj\Debug\net8.0\manticore.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ali\source\repos\csharp-guide\manticore\obj\Debug\net8.0\manticore.AssemblyInfoInputs.cache
+C:\Users\Ali\source\repos\csharp-guide\manticore\obj\Debug\net8.0\manticore.AssemblyInfo.cs
+C:\Users\Ali\source\repos\csharp-guide\manticore\obj\Debug\net8.0\manticore.csproj.CoreCompileInputs.cache
+C:\Users\Ali\source\repos\csharp-guide\manticore\obj\Debug\net8.0\manticore.sourcelink.json
+C:\Users\Ali\source\repos\csharp-guide\manticore\obj\Debug\net8.0\manticore.dll
+C:\Users\Ali\source\repos\csharp-guide\manticore\obj\Debug\net8.0\refint\manticore.dll
+C:\Users\Ali\source\repos\csharp-guide\manticore\obj\Debug\net8.0\manticore.pdb
+C:\Users\Ali\source\repos\csharp-guide\manticore\obj\Debug\net8.0\manticore.genruntimeconfig.cache
+C:\Users\Ali\source\repos\csharp-guide\manticore\obj\Debug\net8.0\ref\manticore.dll
