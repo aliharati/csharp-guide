@@ -1,0 +1,15 @@
+C:\Users\Ali\Source\Repos\csharp-guide\Objects\bin\Debug\net8.0\Objects.exe
+C:\Users\Ali\Source\Repos\csharp-guide\Objects\bin\Debug\net8.0\Objects.deps.json
+C:\Users\Ali\Source\Repos\csharp-guide\Objects\bin\Debug\net8.0\Objects.runtimeconfig.json
+C:\Users\Ali\Source\Repos\csharp-guide\Objects\bin\Debug\net8.0\Objects.dll
+C:\Users\Ali\Source\Repos\csharp-guide\Objects\bin\Debug\net8.0\Objects.pdb
+C:\Users\Ali\Source\Repos\csharp-guide\Objects\obj\Debug\net8.0\Objects.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ali\Source\Repos\csharp-guide\Objects\obj\Debug\net8.0\Objects.AssemblyInfoInputs.cache
+C:\Users\Ali\Source\Repos\csharp-guide\Objects\obj\Debug\net8.0\Objects.AssemblyInfo.cs
+C:\Users\Ali\Source\Repos\csharp-guide\Objects\obj\Debug\net8.0\Objects.csproj.CoreCompileInputs.cache
+C:\Users\Ali\Source\Repos\csharp-guide\Objects\obj\Debug\net8.0\Objects.sourcelink.json
+C:\Users\Ali\Source\Repos\csharp-guide\Objects\obj\Debug\net8.0\Objects.dll
+C:\Users\Ali\Source\Repos\csharp-guide\Objects\obj\Debug\net8.0\refint\Objects.dll
+C:\Users\Ali\Source\Repos\csharp-guide\Objects\obj\Debug\net8.0\Objects.pdb
+C:\Users\Ali\Source\Repos\csharp-guide\Objects\obj\Debug\net8.0\Objects.genruntimeconfig.cache
+C:\Users\Ali\Source\Repos\csharp-guide\Objects\obj\Debug\net8.0\ref\Objects.dll
