@@ -1,5 +1,6 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using System.Xml;
+﻿
+
+using System.Security.Cryptography;
 
 internal class Program
 {
@@ -14,8 +15,95 @@ internal class Program
         Color random = new Color(24, 56, 124);
         Color yellow = Color.Yellow();
         Console.WriteLine($"Random Color: {random}");
-        Console.WriteLine($"Yelow: {yellow}");
+        Console.WriteLine($"Yellow: {yellow}");
+
+
+        Card[] cards = new Card[56];
+        int s = 0;
+        for (int i=1; i < 5; i++){
+            for (int j = 1; j < 15; j++)
+            {
+                Card card = new(getColor(i), getRank(j));
+                cards[s++] = card;
+                //Console.WriteLine(card);
+
+            }
+        }
+
+        string pass = AskUserText("Choose a pass for the door: ");
+        Door door = new(pass);
+        bool continueRun = true;
+        while (continueRun)
+        {   
+            int decision = AskUserNum("Choose what to do with the door:\n1.Open\n2.Close\n3.Unlock\n4.Lock\n5.Change Pass\n6.Quit\n");
+            switch (decision)
+            {
+                case 1:
+                    door.Open(); break;
+                case 2:
+                    door.Close(); break;
+                case 3:
+                    door.Unlock(AskUserText("Enter pass: ")); break;
+                case 4:
+                    door.Lock(); break;
+                case 5:
+                    string oldPass = AskUserText("Enter old pass: ");
+                    string newPass = AskUserText("Enter new pass:");
+                    door.ChangePassword(oldPass, newPass);
+                    break;
+                case 6:
+                    continueRun = false; break;
+                default:
+                    break;
+            }
+        }
+        
     }
+    public static CardColor getColor(int color)
+    {
+        return color switch
+        {
+            1 => CardColor.Red,
+            2 => CardColor.Green,
+            3 => CardColor.Blue,
+            4 => CardColor.Yellow
+        };
+    }
+
+    public static string AskUserText(string text)
+    {
+        Console.Write(text);
+        return Console.ReadLine();
+    }
+    public static int AskUserNum(string text)
+    {
+        Console.Write(text);
+        return Convert.ToInt32(Console.ReadLine());
+    }
+    public static CardRank getRank(int rank)
+    {
+        return rank switch
+        {
+            1 => CardRank.One,
+            2 => CardRank.Two,
+            3 => CardRank.Three,
+            4 => CardRank.Four,
+            5 => CardRank.Five,
+            6 => CardRank.Six,
+            7 => CardRank.Seven,
+            8 => CardRank.Eight,
+            9 => CardRank.Nine,
+            10 => CardRank.Ten,
+            11 => CardRank.Currency,
+            12 => CardRank.Caret,
+            13 => CardRank.Percent,
+            14 => CardRank.Ampersand
+            
+        };
+    }
+
+
+
 }
 class Point
 {
@@ -64,3 +152,84 @@ class Color
     public static Color Purple => new(128, 0, 128);
 
 }
+
+class Card
+{
+    
+    public CardColor Color { get; set; }
+    public CardRank Rank { get; set; }
+    public Card(CardColor color, CardRank rank) {
+        Color = color;
+        Rank = rank;
+    }
+
+    public override string ToString()
+    {
+        return $"The {Color} {Rank}";
+    }
+}
+
+class Door
+{
+    private DoorState state= DoorState.Locked;
+    private string Passcode {  get; set; }
+    public Door(string passcode)
+    {
+        Passcode = passcode;
+    }
+
+    public void ChangePassword(string currentPass, string newPass)
+    {
+        if (CheckPass(currentPass)) Passcode = newPass;
+        else Console.WriteLine("Wrong Password");
+    }
+    public void Unlock(string pass)
+    {
+        if (!CheckPass(pass))
+        {
+            Console.WriteLine("Wrong PassWord");
+            return;
+        }
+        if(state != DoorState.Locked) 
+        {
+            Console.WriteLine("Door already unlocked");
+            return;
+        }
+        state = DoorState.Closed;
+    }
+    public void Open()
+    {
+        if(state != DoorState.Closed)
+        {
+            Console.WriteLine("Door needs to be closed and unlocked to open!");
+            return;
+        }
+        state = DoorState.Open;
+    }
+    public void Close()
+    {
+        if( state != DoorState.Open)
+        {
+            Console.WriteLine("Door need to be open to close!");
+            return;
+        }  
+        state = DoorState.Closed;
+    }
+    public void Lock() { 
+        if (state != DoorState.Closed)
+        {
+            Console.WriteLine("Door needs to be closed to be locked!");
+            return;
+        }
+        state = DoorState.Locked;
+    }
+
+    public bool CheckPass(string pass)
+    {
+        return pass == Passcode;
+    }
+
+}
+enum DoorState { Open, Closed, Locked}
+enum CardColor { Red, Green, Blue, Yellow }
+enum CardRank { One, Two, Three, Four, Five, Six, Seven, Eight, Nine ,Ten, Currency, Percent, Caret, Ampersand }
