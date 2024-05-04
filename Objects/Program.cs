@@ -142,11 +142,11 @@ class Color
     public byte G { get; set; }
     public byte B { get; set; }
 
-    public Color(int r, int g, int b)
+    public Color(byte r, byte g, byte b)
     {
-        R = Convert.ToByte(r);
-        G = Convert.ToByte(g);
-        B = Convert.ToByte(b);
+        R = r;
+        G = g;
+        B = b;
     }
     public Color(): this(0,0,0) { }
 
@@ -168,8 +168,8 @@ class Color
 class Card
 {
     
-    public CardColor Color { get; set; }
-    public CardRank Rank { get; set; }
+    public CardColor Color { get; }
+    public CardRank Rank { get; }
     public Card(CardColor color, CardRank rank) {
         Color = color;
         Rank = rank;
@@ -179,15 +179,19 @@ class Card
     {
         return $"The {Color} {Rank}";
     }
+
+    public bool IsSymbol => Rank == CardRank.Ampersand || Rank == CardRank.Caret || Rank == CardRank.Currency || Rank == CardRank.Percent;
+    public bool IsNumber => !IsSymbol;
 }
 
 class Door
 {
-    private DoorState state= DoorState.Locked;
+    public DoorState State { get; private set; }
     private string Passcode {  get; set; }
     public Door(string passcode)
     {
         Passcode = passcode;
+        State = DoorState.Locked;
     }
 
     public void ChangePassword(string currentPass, string newPass)
@@ -202,38 +206,38 @@ class Door
             Console.WriteLine("Wrong PassWord");
             return;
         }
-        if(state != DoorState.Locked) 
+        if(State != DoorState.Locked) 
         {
             Console.WriteLine("Door already unlocked");
             return;
         }
-        state = DoorState.Closed;
+        State = DoorState.Closed;
     }
     public void Open()
     {
-        if(state != DoorState.Closed)
+        if(State != DoorState.Closed)
         {
             Console.WriteLine("Door needs to be closed and unlocked to open!");
             return;
         }
-        state = DoorState.Open;
+        State = DoorState.Open;
     }
     public void Close()
     {
-        if( state != DoorState.Open)
+        if( State != DoorState.Open)
         {
             Console.WriteLine("Door need to be open to close!");
             return;
         }  
-        state = DoorState.Closed;
+        State = DoorState.Closed;
     }
     public void Lock() { 
-        if (state != DoorState.Closed)
+        if (State != DoorState.Closed)
         {
             Console.WriteLine("Door needs to be closed to be locked!");
             return;
         }
-        state = DoorState.Locked;
+        State = DoorState.Locked;
     }
 
     public bool CheckPass(string pass)
@@ -245,7 +249,8 @@ class Door
 
 class PasswordValidator
 {
-    public static int Length { get; private set; } = 6;
+    public static int LengthMin { get; private set; } = 6;
+    public static int LengthMax { get; private set; } = 13;
     public static int Uppercases { get; private set; } = 1;
     public static int Lowercases { get; private set; } = 1;
     public static int Numbers { get; private set; } = 1;
@@ -253,7 +258,9 @@ class PasswordValidator
 
     public static bool isValid(string pass)
     {
-        bool validLength = pass.Length >= 6 ? true : false;
+        if (pass == null) return false;
+        bool validLength = pass.Length < LengthMin && pass.Length > LengthMax ? true : false;
+
         bool validUppercase = false;
         bool validLowercase = false;
         bool validNumbers = false;
