@@ -1,8 +1,4 @@
-﻿
-
-using System.Security.Cryptography;
-
-internal class Program
+﻿internal class Program
 {
     private static void Main(string[] args)
     {
@@ -29,12 +25,29 @@ internal class Program
 
             }
         }
-
+        //TestDoor();
+        TestPasswordValidator();
+        
+        
+        
+    }
+    public static void TestPasswordValidator()
+    {
+        bool validPass;
+        do
+        {
+            string newPass = AskUserText("Enter new Password: ");
+            validPass = PasswordValidator.isValid(newPass);
+        }while (!validPass);
+        Console.WriteLine("Password Accepted");
+    }
+    public static void TestDoor()
+    {
         string pass = AskUserText("Choose a pass for the door: ");
         Door door = new(pass);
         bool continueRun = true;
         while (continueRun)
-        {   
+        {
             int decision = AskUserNum("Choose what to do with the door:\n1.Open\n2.Close\n3.Unlock\n4.Lock\n5.Change Pass\n6.Quit\n");
             switch (decision)
             {
@@ -57,7 +70,6 @@ internal class Program
                     break;
             }
         }
-        
     }
     public static CardColor getColor(int color)
     {
@@ -229,6 +241,32 @@ class Door
         return pass == Passcode;
     }
 
+}
+
+class PasswordValidator
+{
+    public static int Length { get; private set; } = 6;
+    public static int Uppercases { get; private set; } = 1;
+    public static int Lowercases { get; private set; } = 1;
+    public static int Numbers { get; private set; } = 1;
+    public static char[] Forbidden { get; private set; } = new char[] { 'T', '&' };
+
+    public static bool isValid(string pass)
+    {
+        bool validLength = pass.Length >= 6 ? true : false;
+        bool validUppercase = false;
+        bool validLowercase = false;
+        bool validNumbers = false;
+        bool containsForbidden = false;
+        foreach (char c in pass)
+        {
+            if (char.IsUpper(c)) validUppercase = true;
+            if (char.IsLower(c)) validLowercase = true;
+            if (char.IsDigit(c)) validNumbers = true;
+            if (Forbidden.Contains(c)) containsForbidden = true;
+        }
+        return validLength && validUppercase && validLowercase && validNumbers && !containsForbidden;
+    }
 }
 enum DoorState { Open, Closed, Locked}
 enum CardColor { Red, Green, Blue, Yellow }
