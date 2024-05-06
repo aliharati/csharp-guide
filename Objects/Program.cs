@@ -26,10 +26,19 @@
             }
         }
         //TestDoor();
-        TestPasswordValidator();
-        
-        
-        
+        //TestPasswordValidator();
+        Pack pack = new Pack(10, 6, 20);
+        pack.AddItem(new Sword());
+        Console.WriteLine(pack);
+        pack.AddItem(new Bow());
+        Console.WriteLine(pack);
+        pack.AddItem(new Arrow());
+        Console.WriteLine(pack);
+        pack.AddItem(new Rope());
+        Console.WriteLine(pack);
+
+
+
     }
     public static void TestPasswordValidator()
     {
@@ -274,6 +283,93 @@ class PasswordValidator
         }
         return validLength && validUppercase && validLowercase && validNumbers && !containsForbidden;
     }
+}
+
+public class Pack
+{
+    public double MaxWeight { get; init; }
+    public int MaxCapacity { get; init; }
+    public double MaxVolume { get; init; }
+    public double Weight {  get; private set; }
+    public int Capacity { get; private set; }
+    public double FilledVolume { get; private set; }
+    public InventoryItem[] Items { get; private set; }
+
+    public Pack(double maxWeight, int maxCapacity, double maxVolume)
+    {
+        MaxWeight = maxWeight;
+        MaxCapacity = maxCapacity;
+        MaxVolume = maxVolume;
+        Weight = 0;
+        Capacity = 0;
+        FilledVolume = 0;
+        Items = new InventoryItem[maxCapacity];
+    }
+    public bool AddItem(InventoryItem item)
+    {
+        if (Capacity == MaxCapacity)
+        {
+            Console.WriteLine("Pack is full");
+            return false;
+        }
+        if (item.Weight> MaxWeight - Weight)
+        {
+            Console.WriteLine($"{item.Weight} weight is too heavy! Pack has room for items under {MaxWeight - Weight}kg");
+            return false;
+        }
+        if(item.Volume> MaxVolume - FilledVolume)
+        {
+            Console.WriteLine($"{item.Volume} is too big! Pack has room for items smaller than {MaxVolume - FilledVolume}feet");
+            return false;
+        }
+        Weight += item.Weight;
+        FilledVolume += item.Volume;
+        Items[Capacity++] = item;
+        return true;
+    }
+
+    public override string ToString()
+    {
+        return $"The pack currently holds {Capacity} items, Weights {Weight}kg and {FilledVolume} feet of the pack is filled";
+    }
+ 
+}
+public class InventoryItem
+{
+    public double Weight { get; private set; }
+    public double Volume { get; private set; }
+
+    public InventoryItem(double weight, double volume)
+    {
+        Weight = weight;
+        Volume = volume;
+    }
+}
+
+public class Arrow: InventoryItem
+{
+    public Arrow(): base(0.1, 0.05) { }
+}
+
+public class Bow: InventoryItem
+{
+    public Bow(): base(1, 4) { }
+}
+public class Rope: InventoryItem
+{
+    public Rope(): base(1, 1.5) { }
+}
+public class Water: InventoryItem
+{
+    public Water(): base(2, 3) { }
+}
+public class FoodRation: InventoryItem
+{
+    public FoodRation(): base(1, 0.5) { }
+}
+public class Sword: InventoryItem
+{
+    public Sword(): base(5, 3) { }
 }
 enum DoorState { Open, Closed, Locked}
 enum CardColor { Red, Green, Blue, Yellow }
