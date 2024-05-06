@@ -330,7 +330,14 @@ public class Pack
 
     public override string ToString()
     {
-        return $"The pack currently holds {Capacity} items, Weights {Weight}kg and {FilledVolume} feet of the pack is filled";
+        string itemList = "";
+        foreach(InventoryItem item in Items)
+        {
+            if (item != null)
+                itemList += $"a {item} ";
+        }
+
+        return $"The pack currently holds {Capacity} items, Weights {Weight}kg and {FilledVolume} feet of the pack is filled\n The Pack contains {itemList}";
     }
  
 }
@@ -344,32 +351,62 @@ public class InventoryItem
         Weight = weight;
         Volume = volume;
     }
+
+    public override string ToString()
+    {
+        return "Inventory Item";
+    }
 }
 
 public class Arrow: InventoryItem
 {
     public Arrow(): base(0.1, 0.05) { }
+
+    public override string ToString()
+    {
+        return "Arrow";
+    }
 }
 
 public class Bow: InventoryItem
 {
     public Bow(): base(1, 4) { }
+    public override string ToString()
+    {
+        return "Bow";
+    }
 }
 public class Rope: InventoryItem
 {
     public Rope(): base(1, 1.5) { }
+    public override string ToString()
+    {
+        return "Rope";
+    }
 }
 public class Water: InventoryItem
 {
     public Water(): base(2, 3) { }
+    public override string ToString()
+    {
+        return "Water";
+    }
 }
 public class FoodRation: InventoryItem
 {
     public FoodRation(): base(1, 0.5) { }
+    public override string ToString()
+    {
+        return "Food Ration";
+    }
 }
 public class Sword: InventoryItem
 {
     public Sword(): base(5, 3) { }
+    public override string ToString()
+    {
+        return "Sword";
+    }
 }
 enum DoorState { Open, Closed, Locked}
 enum CardColor { Red, Green, Blue, Yellow }
