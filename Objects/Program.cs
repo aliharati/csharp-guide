@@ -29,13 +29,12 @@
         //TestPasswordValidator();
         Pack pack = new Pack(10, 6, 20);
         pack.AddItem(new Sword());
-        Console.WriteLine(pack);
         pack.AddItem(new Bow());
-        Console.WriteLine(pack);
         pack.AddItem(new Arrow());
-        Console.WriteLine(pack);
         pack.AddItem(new Rope());
-        Console.WriteLine(pack);
+
+
+
 
 
 
@@ -122,8 +121,6 @@
             
         };
     }
-
-
 
 }
 class Point
@@ -341,6 +338,7 @@ public class Pack
     }
  
 }
+
 public class InventoryItem
 {
     public double Weight { get; private set; }
@@ -357,7 +355,6 @@ public class InventoryItem
         return "Inventory Item";
     }
 }
-
 public class Arrow: InventoryItem
 {
     public Arrow(): base(0.1, 0.05) { }
@@ -367,7 +364,6 @@ public class Arrow: InventoryItem
         return "Arrow";
     }
 }
-
 public class Bow: InventoryItem
 {
     public Bow(): base(1, 4) { }
@@ -408,6 +404,8 @@ public class Sword: InventoryItem
         return "Sword";
     }
 }
+
+
 enum DoorState { Open, Closed, Locked}
 enum CardColor { Red, Green, Blue, Yellow }
 enum CardRank { One, Two, Three, Four, Five, Six, Seven, Eight, Nine ,Ten, Currency, Percent, Caret, Ampersand }
