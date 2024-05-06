@@ -6,8 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Games
-{
+
+
     internal class Player
     {
         public string Name { get; init; }
@@ -156,4 +156,4 @@ namespace Games
 
     enum Hand { Rock, Paper, Scissors }
     enum Result{Win, Lose, Draw}
-}
+
