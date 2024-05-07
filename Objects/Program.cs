@@ -1,4 +1,6 @@
-﻿internal class Program
+﻿using System.Security.Cryptography.X509Certificates;
+
+internal class Program
 {
     private static void Main(string[] args)
     {
@@ -33,11 +35,31 @@
         pack.AddItem(new Arrow());
         pack.AddItem(new Rope());
 
+        TestCoStruct();
 
 
 
 
-
+    }
+    public static void TestCoStruct()
+    {
+        Coordinate c1 = new Coordinate(1, 1);
+        Coordinate c2 = new Coordinate(1, 2);
+        Coordinate c3 = new Coordinate(2, 1);
+        Coordinate c4 = new Coordinate(0, 1);
+        Coordinate c5 = new Coordinate(1, 0);
+        Coordinate c6 = new Coordinate(0, 0);
+        Coordinate c7 = new Coordinate(2, 2);
+        Coordinate c8 = new Coordinate(2, 0);
+        Coordinate c9 = new Coordinate(0, 2);
+        Console.WriteLine(c1.IsAdjacent(c2));
+        Console.WriteLine(c1.IsAdjacent(c3));
+        Console.WriteLine(c1.IsAdjacent(c4));
+        Console.WriteLine(c1.IsAdjacent(c5));
+        Console.WriteLine(c1.IsAdjacent(c6));
+        Console.WriteLine(c1.IsAdjacent(c7));
+        Console.WriteLine(c1.IsAdjacent(c8));
+        Console.WriteLine(c1.IsAdjacent(c9));
     }
     public static void TestPasswordValidator()
     {
@@ -404,6 +426,26 @@ public class Sword: InventoryItem
         return "Sword";
     }
 }
+
+public struct Coordinate
+{
+    public int X { get; init; }
+    public int Y { get; init; }
+
+    public Coordinate(int x, int y)
+    {
+        X = x;
+        Y = y;
+    }
+
+    public bool IsAdjacent(Coordinate c)
+    {
+        int xDiff = Math.Abs(X - c.X);
+        int yDiff = Math.Abs( Y - c.Y);
+        int totalDiff = xDiff + yDiff;
+        return totalDiff <= 1;
+    }
+    }
 
 
 enum DoorState { Open, Closed, Locked}
