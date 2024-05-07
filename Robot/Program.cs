@@ -4,18 +4,33 @@ internal class Program
 {
     private static void Main(string[] args)
     {
+        //testRobot();
+        Sword OGSword = new Sword(Material.Iron, null,27.5,10);
+        Console.WriteLine(OGSword);
+        Sword techSword = OGSword with { SwordMaterial = Material.Binarium, SwordGem= Gem.Bistone };
+        Console.WriteLine(techSword);
+        Sword KingSword = OGSword with
+        {
+            SwordGem = Gem.Diamond,
+            SwordMaterial = Material.Steel,
+            Length = 47.5,
+            CrossGuardWidth = 25
+        };
+        Console.WriteLine(KingSword);
+
+    }
+    public static void testRobot()
+    {
         Robot robot = new Robot();
         Console.WriteLine("Please choose from the commands below to control the Robot:\non\noff\nnorth\nsouth\neast\nwest");
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++)
+        {
             Console.Write("Command: ");
             string command = Console.ReadLine();
             robot.Commands[i] = returnCommand(command);
         }
         robot.Run();
-
-
     }
-
     public static IRobotCommand returnCommand(string command)
     {
         return command switch 
@@ -97,3 +112,9 @@ public class PowerOff : IRobotCommand
         robot.IsPowered = false;
     }
 }
+
+record Sword(Material SwordMaterial, Gem? SwordGem, double Length, double CrossGuardWidth);
+
+
+enum Material { Wood, Bronze, Iron, Steel, Binarium }
+enum Gem { Emerald, Amber, Sapphire, Diamond, Bistone}
