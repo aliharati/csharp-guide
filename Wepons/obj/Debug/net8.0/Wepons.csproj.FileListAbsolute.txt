@@ -1,0 +1,15 @@
+C:\Users\Ali\source\repos\csharp-guide\Wepons\bin\Debug\net8.0\Wepons.exe
+C:\Users\Ali\source\repos\csharp-guide\Wepons\bin\Debug\net8.0\Wepons.deps.json
+C:\Users\Ali\source\repos\csharp-guide\Wepons\bin\Debug\net8.0\Wepons.runtimeconfig.json
+C:\Users\Ali\source\repos\csharp-guide\Wepons\bin\Debug\net8.0\Wepons.dll
+C:\Users\Ali\source\repos\csharp-guide\Wepons\bin\Debug\net8.0\Wepons.pdb
+C:\Users\Ali\source\repos\csharp-guide\Wepons\obj\Debug\net8.0\Wepons.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ali\source\repos\csharp-guide\Wepons\obj\Debug\net8.0\Wepons.AssemblyInfoInputs.cache
+C:\Users\Ali\source\repos\csharp-guide\Wepons\obj\Debug\net8.0\Wepons.AssemblyInfo.cs
+C:\Users\Ali\source\repos\csharp-guide\Wepons\obj\Debug\net8.0\Wepons.csproj.CoreCompileInputs.cache
+C:\Users\Ali\source\repos\csharp-guide\Wepons\obj\Debug\net8.0\Wepons.sourcelink.json
+C:\Users\Ali\source\repos\csharp-guide\Wepons\obj\Debug\net8.0\Wepons.dll
+C:\Users\Ali\source\repos\csharp-guide\Wepons\obj\Debug\net8.0\refint\Wepons.dll
+C:\Users\Ali\source\repos\csharp-guide\Wepons\obj\Debug\net8.0\Wepons.pdb
+C:\Users\Ali\source\repos\csharp-guide\Wepons\obj\Debug\net8.0\Wepons.genruntimeconfig.cache
+C:\Users\Ali\source\repos\csharp-guide\Wepons\obj\Debug\net8.0\ref\Wepons.dll
