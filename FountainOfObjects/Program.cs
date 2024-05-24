@@ -20,33 +20,62 @@ public class CavernExplorer
 {
     public Cavern Cavern { get; set; }
     public Player Player { get; set; }
-    public Coordinate currentCoordinate { get; set; }
+    public Coordinate LastCoordinate { get; set; } = new Coordinate(0,0);
+    public int Turn { get; set; } = 0;
 
     public CavernExplorer()
     {
-        Cavern = new Cavern(new Coordinate(0,2), 4,4);
+        
         string name = Player.getCommand("Please Enter your Name: ");
+        string gameSize = Player.getCommand("Would you like to play a small, medium or large game?\n1.Small\n2.Medium\n3.Large\n");
+        switch (gameSize.ToLower())
+        {
+            case "1":
+            case "small":
+                Cavern = new Cavern(4, 4);
+                break;
+            case "2":
+            case "medium":
+                Cavern = new Cavern(6, 6);
+                break;
+            case "3":
+            case "large":
+                Cavern = new Cavern(8, 8);
+                break;
+            default:
+                Cavern = new Cavern(4, 4);
+                break;
+
+        }
+        
         Player = new Player(name,Cavern.Entrance, Cavern.GetRoom(new Coordinate(0,0)));
         
     }
 
     public void StartGame()
-    {
+    {   
+
+
         while (true)
         {
-            
-            Player.CurrentRoom.Display();
+            Console.Clear();
+            if (Turn>0 && Player.Coordinate.Equals(LastCoordinate)) Console.WriteLine("Path is blocked!");
+            LastCoordinate = new Coordinate(Player.Coordinate);
+            Console.WriteLine(Player.CurrentRoom);
             string playerCommand = Player.getCommand("What do you want to do? ");
             Player.Run(StringToCommand(playerCommand));
-            Player.CurrentRoom = Cavern.GetRoom(Player.Coordinate);
+            Player.CurrentRoom = Cavern.GetRoom(Player.Coordinate);        
             if (Player.CurrentRoom.GetType() == typeof(EntranceRoom) && Cavern.FountainRoom.FountainOn )
             {
                 Console.WriteLine("The Fountain of Objects has been reactivated, and you have escaped with your life!\r\nYou win!");
                 return;
             }
+            Turn++;
+            
 
         }
     }
+
 
     public ICommand? StringToCommand(string command)
     {
@@ -60,6 +89,8 @@ public class CavernExplorer
             _ => null
         };
     }
+
+    
 
 }
 public class Player
@@ -109,12 +140,25 @@ public class Coordinate
 
     public Coordinate() { }
     public Coordinate(int x, int y) {  X = x; Y = y; }
+    public Coordinate(Coordinate coord) { X = coord.X; Y = coord.Y; }
+
+    public static Coordinate GenerateRandom(int rowLimit, int colLimit)
+    {
+        Random rand = new Random();
+        int start = 0;
+        int row = rand.Next(rowLimit);
+        if (row == 0) start = 1;
+        int col = rand.Next(start, colLimit);
+        return new Coordinate(row, col);
+
+    }
+
     public override string ToString()
     {
         return $"(Row={X}, Column={Y})";
     }
 
-    public override bool Equals(object? obj)
+    public override bool Equals(object obj)
     {
         if (obj == null) return false;
         if (obj.GetType() != typeof(Coordinate)) return false;
@@ -133,28 +177,28 @@ public class MoveNorth: ICommand
 {
     public void Run(Player player)
     {
-        player.Coordinate.Y += 1;
+        player.Coordinate.X += 1;
     }
 }
 public class MoveSouth : ICommand
 {
     public void Run(Player player)
-    {
-        player.Coordinate.Y -= 1;
+    {       
+        player.Coordinate.X -= 1;
     }
 }
 public class MoveEast : ICommand
 {
     public void Run(Player player)
     {
-        player.Coordinate.X += 1;
+        player.Coordinate.Y += 1;
     }
 }
 public class MoveWest : ICommand
 {
     public void Run(Player player)
     {
-        player.Coordinate.X -= 1;
+        player.Coordinate.Y -= 1;
     }
 }
 public class EnableFountain : ICommand
@@ -181,10 +225,11 @@ public class Room
     {
         Coordinate = coord;
     }
-
-    public void Display()
+    
+    public override string ToString()
     {
-        Console.WriteLine($"You are in the room at {Coordinate}");
+        return $"You are in the room at {Coordinate}";
+        
     }
 
 }
@@ -234,7 +279,8 @@ public class EntranceRoom : Room
 
     public override string ToString()
     {
-        return base.ToString() + "\nYou see light coming from the cavern entrance.";
+        string message = base.ToString() + "\nYou see light coming from the cavern entrance.";
+        return message;
     }
 }
 
@@ -245,10 +291,11 @@ public class Cavern
     public Coordinate Entrance {  get; set; }
     public int Rows { get; init; }
     public int Columns { get; init; }
-    public FountainRoom FountainRoom { get; set; }
-    public Cavern(Coordinate fountainCoordinate, int rows, int columns)
+    public FountainRoom? FountainRoom { get; set; }
+
+    public Cavern(int rows, int columns)
     {
-        FountainCoordinate = fountainCoordinate;
+        FountainCoordinate = Coordinate.GenerateRandom(rows,columns);
         Entrance = new Coordinate(0,0);
         Rooms = new Room[rows ,columns];
         Rows = rows;
@@ -258,6 +305,10 @@ public class Cavern
     }
     public Room GetRoom(Coordinate coord)
     {
+        if (coord.Y < 0) coord.Y += 1;
+        if (coord.X < 0) coord.X += 1;
+        if (coord.Y>=Columns) coord.Y -= 1;
+        if (coord.X>=Rows) coord.X -= 1;
         return Rooms[coord.X,coord.Y];
     }
     public void PopulateCavern()
@@ -267,16 +318,18 @@ public class Cavern
             for (int j = 0; j < Columns; j++)
             {
                 Coordinate newCoordinate = new Coordinate(i,j);
-                if (FountainCoordinate == newCoordinate)
+                if (FountainCoordinate.Equals(newCoordinate))
                 {
+                    Console.WriteLine("fountainRoom added");
                     FountainRoom = new FountainRoom(FountainCoordinate);
                     Rooms[i, j] = FountainRoom;
                 }   
-                else if (Entrance == newCoordinate)
+                else if (Entrance.Equals(newCoordinate))
                     Rooms[i, j] = new EntranceRoom();
                 else
                     Rooms[i, j] = new Room(newCoordinate);
             }
         }
     }
+    
 }
